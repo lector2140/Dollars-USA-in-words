@@ -2,7 +2,7 @@ public class NumbersToLeters {
 
     public static void main(String[] args) {
         NumbersToLeters g = new NumbersToLeters();
-        double number = 999888771.71;
+        double number = 999888771.71;//до милиарда
         String[] arr = g.createArrayFromNumber(number);
         String finalStringNumbers = g.convertIntrigerPartNum(arr)+g.currencyDollar(number,0)
                 +g.convertDecimalsPartNum(arr)+g.currencyDollar(number,1);
@@ -190,8 +190,6 @@ public class NumbersToLeters {
         }
         return pNumber;
     }
-
-
     String currencyDollar (double num, int afterpoint) {
         int partInt=(int)num;
         double partDecimals=(float)Math.round((num-partInt)*100d)/100d;
