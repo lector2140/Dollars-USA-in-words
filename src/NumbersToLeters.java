@@ -8,7 +8,6 @@ public class NumbersToLeters {
                 +g.convertDecimalsPartNum(arr)+g.currencyDollar(number,1);
 
         System.out.print(finalStringNumbers);
-
     }
     public String convertIntrigerPartNum(String arr[]) {
         NumbersToLeters g = new NumbersToLeters();
