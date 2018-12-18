@@ -1,11 +1,18 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 public class NumbersToLeters {
 
     public static void main(String[] args) {
         NumbersToLeters g = new NumbersToLeters();
-        double number = 999888771.71;//до милиарда
+        System.out.println("Введите число до миллиарда(разделитель \",\" ):");
+        Scanner in = new Scanner(System.in);
+        double y = in.nextDouble();
+        double number = y;//до милиарда
         String[] arr = g.createArrayFromNumber(number);
-        String finalStringNumbers = g.convertIntrigerPartNum(arr)+g.currencyDollar(number,0)
-                +g.convertDecimalsPartNum(arr)+g.currencyDollar(number,1);
+        String finalStringNumbers = g.convertIntrigerPartNum(arr)+g.currencyDollar(number,false)
+                +g.convertDecimalsPartNum(arr)+g.currencyDollar(number,true);
 
         System.out.print(finalStringNumbers);
     }
@@ -32,7 +39,7 @@ public class NumbersToLeters {
                 }
             }
             if (count > 0) {
-                intrigerPartNumbers += g.namePuwer(i) + " ";
+                intrigerPartNumbers += g.namePower(i) + " ";
             }
             if (count == 0&i==6) {
                 intrigerPartNumbers += g.simpleNumbers(arr[i + 2]) + " ";
@@ -40,16 +47,15 @@ public class NumbersToLeters {
         }
         return intrigerPartNumbers;
     }
-    private String namePuwer (int num) {
+    private String namePower (int num) {
         String name = "";
-        switch (num) {
-            case 0:
-                name = "million";
-                break;
-            case 3:
-                name = "thousand";
-                break;
-        }return name;
+        Map<Integer, String> namePowerMap = new HashMap<Integer, String>()
+        { {
+            put(0, "million");
+            put(3,"thousand");
+            put(6,"");
+                   }};
+        return name=namePowerMap.get(num);
     }
     public String convertDecimalsPartNum(String arr[]) {
         NumbersToLeters g = new NumbersToLeters();
@@ -86,121 +92,65 @@ public class NumbersToLeters {
         return arr;
     }
     private final String simpleNumbers (String num){
-
         String pNumber = "";
-        switch (num) {
-            case "0":
-                pNumber = "zero";
-                break;
-            case "1":
-                pNumber = "one";
-                break;
-            case "2":
-                pNumber = "two";
-                break;
-            case "3":
-                pNumber = "three";
-                break;
-            case "4":
-                pNumber = "four";
-                break;
-            case "5":
-                pNumber = "five";
-                break;
-            case "6":
-                pNumber = "six";
-                break;
-            case "7":
-                pNumber = "seven";
-                break;
-            case "8":
-                pNumber = "eight";
-                break;
-            case "9":
-                pNumber = "nine";
-                break;
-        }
-        return pNumber;
-    }
+        Map<String, String> simpleNumbersMap = new HashMap<String, String>()
+        { {
+            put("0","zero");
+            put("1","one");
+            put("2","two");
+            put("3", "three");
+            put("4", "four");
+            put("5", "five");
+            put("6", "six");
+            put("7", "seven");
+            put("8", "eight");
+            put("9", "nine");
+                    }};
+        return pNumber=simpleNumbersMap.get(num);
+                   }
     private final String teenNumbers(String num){
-
         String pNumber = "";
-        switch (num) {
-            case "10":
-                pNumber = "ten";
-                break;
-            case "11":
-                pNumber = "eleven";
-                break;
-            case "12":
-                pNumber = "twelve";
-                break;
-            case "13":
-                pNumber = "thirteen";
-                break;
-            case "14":
-                pNumber = "fourteen";
-                break;
-            case "15":
-                pNumber = "fifteen";
-                break;
-            case "16":
-                pNumber = "sixteen";
-                break;
-            case "17":
-                pNumber = "seventeen";
-                break;
-            case "18":
-                pNumber = "eighteen";
-                break;
-            case "19":
-                pNumber = "nineteen";
-                break;
-        }
-        return pNumber;
+        Map<String, String> teenNumbersMap = new HashMap<String, String>()
+        {{
+                put("10", "ten");
+                put("11", "eleven");
+                put("12", "twelve");
+                put("13", "thirteen");
+                put("14", "fourteen");
+                put("15", "fifteen");
+                put("16", "sixteen");
+                put("17", "seventeen");
+                put("18", "eighteen");
+                put("19", "nineteen");
+            }};
+        return pNumber=teenNumbersMap.get(num);
     }
     private final  String tyNumbers (String num){
-
         String pNumber = "";
-        switch (num) {
-            case "2":
-                pNumber = "twenty";
-                break;
-            case "3":
-                pNumber = "thirty";
-                break;
-            case "4":
-                pNumber = "forty";
-                break;
-            case "5":
-                pNumber = "fifty";
-                break;
-            case "6":
-                pNumber = "sixty";
-                break;
-            case "7":
-                pNumber = "seventy";
-                break;
-            case "8":
-                pNumber = "eighty";
-                break;
-            case "9":
-                pNumber = "ninety";
-                break;
-        }
-        return pNumber;
+        Map<String, String> tyNumbersMap = new HashMap<String, String>()
+        {{
+                put("2", "twenty");
+                put("3", "thirty");
+                put("4", "forty");
+                put("5", "fifty");
+                put("6", "sixty");
+                put("7", "seventy");
+                put("8", "eighty");
+                put("9", "ninety");
+            }};
+        return pNumber=tyNumbersMap.get(num);
     }
-    String currencyDollar (double num, int afterpoint) {
+    String currencyDollar (double num, boolean afterpoint) {
         int partInt=(int)num;
         double partDecimals=(float)Math.round((num-partInt)*100d)/100d;
         //double partDecimals=new BigDecimal(num-partInt).setScale(2, RoundingMode.HALF_UP).doubleValue();
         String name = "";
 
-        if (afterpoint==0){
+        if (afterpoint==false){
             if (partInt==1){name = "dollar";}
             else {name = "dollars";}
         }
-        if (afterpoint==1){
+        if (afterpoint){
             if (partDecimals==0.01){name = "cent";}
             else {name = "cents";}
         }
